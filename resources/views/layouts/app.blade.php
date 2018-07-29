@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -20,6 +21,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.dataTables.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap.css')}}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -31,12 +34,21 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
+                    <ul class="navbar-nav mr-auto">
                         @if (Auth::check())
-                        <li><a href="{{ url('/home') }}">Dashboard</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/') }}">Home</a>
+                            </li>
+                            @role('admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('authors.index') }}">Penulis</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('books.index') }}">Buku</a>
+                                </li>
+                            @endrole
                         @endif
                     </ul>
 
@@ -48,7 +60,7 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Daftar') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">Daftar</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -73,10 +85,17 @@
                 </div>
             </div>
         </nav>
-<hr>
         <main class="py-4">
+            @include('layouts._flash')
             @yield('content')
         </main>
     </div>
+    {{--  JS  --}}
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('/js/custom.js')}}"></script> 
+    @yield('scripts')
 </body>
 </html>
+

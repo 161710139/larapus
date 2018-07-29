@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'GuestController@index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix'=>'admin' , 'middleware'=>['auth']],function(){
+//isi route disini
+Route::resource('authors', 'AuthorController');
+Route::resource('books', 'BookController');
+});
+Route::get('books/{book}/borrow', ['middleware' => ['auth', 'role:member'],'as' => 'pinjambuku','uses' => 'BookController@borrow'
+]);
+Route::put('books/{book}/return', ['middleware' => ['auth', 'role:member'],'as' => 'kembalikanbuku','uses' => 'BookController@returnBack'
+]);
