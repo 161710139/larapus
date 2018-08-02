@@ -21,9 +21,9 @@ class Author extends Model
         // menyiapkan pesan error
         $html = 'Penulis tidak bisa dihapus karena masih memiliki buku : ';
         $html .= '<ul>';
-        foreach ($author->books as $book) {
-            $html .= "<li>$book->title</li>";
-        }
+            foreach ($author->books as $book) {
+                $html .= "<li>$book->title</li>";
+            }
         $html .= '</ul>';
         Session::flash("flash_notification", [
         "level"=>"danger",

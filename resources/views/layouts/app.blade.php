@@ -23,10 +23,12 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery.dataTables.css')}}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap.css')}}" rel="stylesheet">
+    <link href="{{ asset('/css/selectize.css')}}" rel="stylesheet">
+    <link href="{{ asset('/css/selectize.bootstrap3.css')}}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -34,20 +36,31 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarColor01">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @if (Auth::check())
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/') }}">Home</a>
+                                <a class="nav-link" href="{{ url('/home') }}">Home</a>
                             </li>
+                            @if (auth()->check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('settings/profile') }}">Profile</a>
+                            </li>
+                            @endif
                             @role('admin')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('authors.index') }}">Penulis</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('books.index') }}">Buku</a>
-                                </li>
+                                <a class="nav-link" href="{{ route('books.index') }}">Buku</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('members.index') }}">Member</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('statistics.index') }}">Peminjaman</a>
+                            </li>
                             @endrole
                         @endif
                     </ul>
@@ -74,7 +87,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
+                                        <a class="dropdown-item" href="{{ url('/settings/password') }}"> Ubah Password</a>    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -95,6 +108,8 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/js/custom.js')}}"></script> 
+    <script src="{{ asset('js/selectize.min.js') }}"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     @yield('scripts')
 </body>
 </html>
